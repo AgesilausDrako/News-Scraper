@@ -4,6 +4,7 @@
 // Dependencies
 var express = require("express");
 var bodyParser = require("body-parser");
+var logger = require("morgan");
 var mongoose = require("mongoose");
 // Requiring our Note and Article models
 var Note = require("./models/Note.js");
@@ -18,7 +19,8 @@ mongoose.Promise = Promise;
 // Initialize Express
 var app = express();
 
-// body parser with our app
+// Use morgan body parser with our app
+app.use(logger("dev"));
 app.use(bodyParser.urlencoded({
   extended: false
 }));
@@ -27,18 +29,18 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 // Database configuration with mongoose
-// mongoose.connect("mongodb://localhost/week18day3mongoose");
-// var db = mongoose.connection;
+mongoose.connect("mongodb://localhost/week18day3mongoose");
+var db = mongoose.connection;
 
-// // Show any mongoose errors
-// db.on("error", function(error) {
-//   console.log("Mongoose Error: ", error);
-// });
+// Show any mongoose errors
+db.on("error", function(error) {
+  console.log("Mongoose Error: ", error);
+});
 
-// // Once logged in to the db through mongoose, log a success message
-// db.once("open", function() {
-//   console.log("Mongoose connection successful.");
-// });
+// Once logged in to the db through mongoose, log a success message
+db.once("open", function() {
+  console.log("Mongoose connection successful.");
+});
 
 // Set Handlebars.
 var exphbs = require("express-handlebars");
@@ -97,7 +99,7 @@ app.get("/articles", function(req, res) {
     }
     // Or send the doc to the browser as a json object
     else {
-      res.json(doc);
+      res.render("index", doc);
     }
   });
 });
@@ -145,7 +147,7 @@ app.post("/articles/:id", function(req, res) {
         }
         else {
           // Or send the document to the browser
-          res.send(doc);
+          res.json(doc);
         }
       });
     }
