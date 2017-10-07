@@ -1,8 +1,13 @@
- <div id="wrapper">
-    <h1>News-Scraper</h1>
-    <h2><i>If you can do this...the homework should be no problem.</i></h2>
-    <div id="articles"></div>
-    <div id="notes"></div>
-</div>
+ 
+ <div class="jumbotron txt-center"><h1 class="text-center">News-Scraper</h1></div>
+    <h2 class="text-center"><i>If you can do this...the homework should be no problem.</i></h2>
+    <ul>
+  {{#each data}}
+  	<li>
+  	   <p>Title: {{this.title}}</p>
+       <p>Link: {{this.link}}</p>
+  	</li>
+  {{/each}}
+</ul>
 
 
