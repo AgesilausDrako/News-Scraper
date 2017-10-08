@@ -4,11 +4,13 @@
     <ul>
   {{#each articles}}
   	<li>
-  	   <p>Title: {{this.title}}</p>
+  	   <p class="title">Title: {{this.title}}</p>
        <p>Link: <a href="{{this.link}}">{{this.link}}</a></p>
        <p>Notes: {{this.note}}</p>
+       <a type="submit" class="submit">Submit</a>
   	</li>
   {{/each}}
 </ul>
+<div id="notes"></div>
 
 
