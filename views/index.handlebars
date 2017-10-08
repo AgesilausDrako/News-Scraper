@@ -5,7 +5,7 @@
   {{#each articles}}
   	<li>
   	   <p>Title: {{this.title}}</p>
-       <p>Link: {{this.link}}</p>
+       <p>Link: <a href="{{this.link}}">{{this.link}}</a></p>
        <p>Notes: {{this.note}}</p>
   	</li>
   {{/each}}
