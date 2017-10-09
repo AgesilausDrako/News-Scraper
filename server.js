@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/week18day3mongoose");
+mongoose.connect("mongodb://localhost/newshomeworkmongoose");
 var db = mongoose.connection;
 
 // Show any mongoose errors
@@ -50,15 +50,17 @@ app.set("view engine", "handlebars");
 
 // Routes
 // ======
-
+app.get("/", function(req, res) {
+  res.render("index", {});
+});
 // A GET request to scrape the echojs website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with request
-  request("http://www.echojs.com/", function(error, response, html) {
+  request("http://www.bbc.com/russian/news", function(error, response, html) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(html);
     // Now, we grab every h2 within an article tag, and do the following:
-    $("article h2").each(function(i, element) {
+    $("div.eagle-item__body").each(function(i, element) {
 
       // Save an empty result object
       var result = {};
@@ -66,6 +68,7 @@ app.get("/scrape", function(req, res) {
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this).children("a").text();
       result.link = $(this).children("a").attr("href");
+      result.summary = $(this).children("p.eagle-item__summary").text();
 
       // Using our Article model, create a new entry
       // This effectively passes the result object to the entry (and the title and link)
@@ -85,11 +88,9 @@ app.get("/scrape", function(req, res) {
 
     });
   });
-  // Tell the browser that we finished scraping the text
-  res.send("Scrape Complete");
+  console.log("got articles");
 });
 
-// // This will get the articles we scraped from the mongoDB
 app.get("/articles", function(req, res) {
   // Grab every doc in the Articles array
   Article.find({}, function(error, articles) {
@@ -103,6 +104,7 @@ app.get("/articles", function(req, res) {
     }
   });
 });
+
 
 // Grab an article by it's ObjectId
 app.get("/articles/:id", function(req, res) {

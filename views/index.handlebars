@@ -1,14 +1,20 @@
  
- <div class="jumbotron txt-center"><h1 class="text-center">News-Scraper</h1></div>
+ <div class="jumbotron txt-center"><h1 class="text-center">Russian News-Scraper</h1>
+  <div class="text-center">
+    <button class="btn btn-lg btn-default" id="scrape-btn">Get Articles</button>
+  </div>
+ </div>
     <h1 class="text-center">Scraped Articles</h1>
-    <ul>
+    <ul id="articles">
   {{#each articles}}
-  	<li>
-  	   <p class="title">Title: {{this.title}}</p>
-       <p>Link: <a href="{{this.link}}">{{this.link}}</a></p>
-       <p>Notes: {{this.note}}</p>
-       <a type="submit" class="submit">Submit</a>
+  	<li class="listing">
+  	   <p class="title"><strong>Title:</strong> {{this.title}}</p>
+       <p><strong>Link:</strong> <a href="http://www.bbc.com/{{this.link}}" target="_blank">{{this.link}}</a></p>
+       <p><strong>Summary:</strong> {{this.summary}}</p>
+       <p><strong>Notes:</strong> {{this.note}}</p>
+       <textarea type="text"></textarea> <button class="btn btn-danger">Submit</button>
   	</li>
+    
   {{/each}}
 </ul>
 <div id="notes"></div>
