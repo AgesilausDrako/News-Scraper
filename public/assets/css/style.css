@@ -3,41 +3,53 @@ body {
 }
 
 .jumbotron { 
-  background-color: rgb(235, 17, 17) 
+  margin-top: -2em;
+  background-color: rgb(235, 17, 17);
+  border: .10em solid rgb(14, 3, 3);
+}
+
+.navbar {
+  background-color: rgb(235, 17, 17);
+  margin-bottom: 0;
+  border-bottom: .10em solid rgb(14, 3, 3);
+  font-size: 1em;
+}
+
+.navbar-brand {
+  margin-top: 1em;
+  font-size: 2em;
+}
+.navbar-nav {
+  margin-top: 1em;
+}
+.navbar-brand, .navbar-nav li a {
+  color: rgb(14, 3, 3);
+}
+
+.navbar-brand:hover {
+  color: #ddd;
 }
 
 #scrape-btn {
   margin-top: 2em;
   font-size: 2em;
 }
-#wrapper {
-  width: 960px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 5%;
-}
+
 #articles {
   display: inline-block;
   overflow: auto;
   width: 100%;
   height: 30em;
 }
-#notes {
-  float: right;
-  width: 30%;
-}
-textarea, input {
+textarea {
   display: block;
+  height: 200px;
+  font-size: 18px;
   font-size: 1.5em;
   margin-left: .25em;
   margin-bottom: .25em;
   width: 60%;
   background-color: #FCF5C7;
-}
-
-textarea {
-  height: 200px;
-  font-size: 18px;
 }
 
 ul {
@@ -48,7 +60,7 @@ ul {
 
 .listing {
   margin: 0 .25em .25em .25em;
-  border: .10em solid black;
+  border: .10em solid rgb(14, 3, 3);
   border-radius: .75em;
   margin-bottom: .25em;
 }
@@ -58,6 +70,13 @@ p {
 }
 
 .btn-danger {
+  padding: 1em;
+  font-size: .75em;
+  margin-left: .5em;
+  margin-bottom: .25em;
+}
+
+.btn-success, .btn-info {
   padding: 1em;
   font-size: .75em;
   margin-left: .5em;

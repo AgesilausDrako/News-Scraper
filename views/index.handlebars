@@ -1,4 +1,15 @@
- 
+ <nav class="navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Russian News-Scraper</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/articles">Articles</a></li>
+      <li><a href="/saved">Saved</a></li>
+    </ul>
+  </div>
+</nav>
  <div class="jumbotron txt-center"><h1 class="text-center">Russian News-Scraper</h1>
   <div class="text-center">
     <button class="btn btn-lg btn-default" id="scrape-btn">Get Articles</button>
@@ -12,9 +23,13 @@
        <p><strong>Link:</strong> <a href="http://www.bbc.com/{{this.link}}" target="_blank">{{this.link}}</a></p>
        <p><strong>Summary:</strong> {{this.summary}}</p>
        <p><strong>Notes:</strong> {{this.note}}</p>
-       <textarea type="text"></textarea> <button class="btn btn-danger">Submit</button>
-  	</li>
-    
+       <form>
+        <textarea type="text" class="textAreaInput" action="/articles" name="noteForm" method="post"></textarea> 
+        <button type="submit" class="btn btn-danger savenote">Submit Note</button>
+        <button type="submit" class="btn btn-info save-btn">Save Article</button>
+        <button type="submit" class="btn btn-success delete-btn">Delete Article</button>
+  	   </form>
+    </li>
   {{/each}}
 </ul>
 <div id="notes"></div>

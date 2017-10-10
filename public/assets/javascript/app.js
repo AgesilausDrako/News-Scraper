@@ -1,16 +1,16 @@
+
   $(document).on("click", "#scrape-btn", function(event) {
     event.preventDefault();
     console.log("clicked");
-    $.ajax({
+    $.get({
       method: "GET",
       url: "/scrape"
     })
     .done(function() {
-      
+      window.location = "/articles";
     });
   });
 
-  
   // Whenever someone clicks a p tag
   $(document).on("click", ".title", function() {
     console.log("clicked");
@@ -47,7 +47,7 @@
   });
   
   // When you click the savenote button
-  $(document).on("click", "#savenote", function() {
+  $(document).on("click", ".savenote", function() {
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-id");
   
@@ -56,21 +56,17 @@
       method: "POST",
       url: "/articles/" + thisId,
       data: {
-        // Value taken from title input
-        title: $("#titleinput").val(),
         // Value taken from note textarea
-        body: $("#bodyinput").val()
+        body: $(".textAreaInput").val()
       }
     })
       // With that done
       .done(function(data) {
         // Log the response
         console.log(data);
-        // Empty the notes section
-        $("#notes").empty();
+        window.location = "/articles";
       });
   
     // Also, remove the values entered in the input and textarea for note entry
-    $("#titleinput").val("");
     $("#bodyinput").val("");
   });

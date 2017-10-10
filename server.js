@@ -85,9 +85,11 @@ app.get("/scrape", function(req, res) {
           console.log(doc);
         }
       });
-
     });
-  });
+  },
+function(req, res) {
+  res.redirect("/articles");
+});
   console.log("got articles");
 });
 
