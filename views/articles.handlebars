@@ -17,17 +17,23 @@
  </div>
     <ul id="articles">
   {{#each articles}}
+    {{#if this.saved}}
+    {{else}}
   	<li class="listing">
   	   <p class="title"><strong>Title:</strong> {{this.title}}</p>
        <p><strong>Link:</strong> <a href="http://www.bbc.com/{{this.link}}" target="_blank">{{this.link}}</a></p>
        <p><strong>Summary:</strong> {{this.summary}}</p>
-       <p><strong>Notes:</strong> {{this.note}}</p>
+       <p><strong>Notes:</strong> 
+        {{#if this.note}}
+            {{this.note}}
+        {{/if}}</p>
        <form>
         <textarea type="text" class="textAreaInput" action="/articles" name="noteForm" method="post"></textarea> 
-        <button type="submit" class="btn btn-danger savenote">Submit Note</button>
-        <button type="submit" class="btn btn-info save-btn">Save Article</button>
-        <button type="submit" class="btn btn-success delete-btn">Delete Article</button>
+        <button type="submit" data-id="{{this._id}}" class="btn btn-success savenote">Submit Note</button>
+        <button type="submit" data-id="{{this._id}}" class="btn btn-info save-btn">Save Article</button>
+        <button type="submit" data-id="{{this._id}}" class="btn btn-danger delete-btn">Delete Article</button>
   	   </form>
     </li>
+    {{/if}}
   {{/each}}
 </ul>

@@ -142,7 +142,7 @@ app.post("/articles/:id", function(req, res) {
     // Otherwise
     else {
       // Use the article id to find and update it's note
-      Article.findOneAndUpdate({ "_id": req.params.id }, { "note": doc._id })
+      Article.findOneAndUpdate({ "_id": req.params.id }, { "note": doc.id })
       // Execute the above query
       .exec(function(err, doc) {
         // Log any errors
@@ -158,6 +158,58 @@ app.post("/articles/:id", function(req, res) {
   });
 });
 
+app.get("/saved", function(req, res) {
+  // Grab every doc in the Articles array
+  Article.find({}, function(error, articles) {
+    // Log any errors
+    if (error) {
+      console.log(error);
+    }
+    // Or send the doc to the browser as a json object
+    else {
+      res.render("saved", {articles});
+    }
+  });
+});
+
+app.post("/articles/:id", function(req, res) {
+  if (error) {
+    console.log(error);
+  }
+  // Otherwise
+  else {
+    // Use the article id to find and update it's note
+    Article.findOneAndUpdate({ "saved": req.params.saved })
+    // Execute the above query
+    .exec(function(err, doc) {
+      // Log any errors
+      if (err) {
+        console.log(err);
+      }
+      else {
+        // Or send the document to the browser
+        res.json(doc);
+      }
+    });
+  }
+});
+
+app.post("/articles/:id", function(req, res) {
+    if (error) {
+      console.log(error);
+    }
+    // Otherwise
+    else {
+      // Use the article id to find and delete it
+      Article.remove({"_id": req.params.id}, function(err){
+        if(err) {
+          throw err; 
+        } else {
+          window.location = "articles";
+        }
+    });
+  }
+});
 
 // Listen on port 3000
 app.listen(3000, function() {
