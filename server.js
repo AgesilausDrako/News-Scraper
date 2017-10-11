@@ -102,7 +102,7 @@ app.get("/articles", function(req, res) {
     }
     // Or send the doc to the browser as a json object
     else {
-      res.render("index", {articles});
+      res.render("articles", {articles});
     }
   });
 });
