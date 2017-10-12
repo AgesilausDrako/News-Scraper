@@ -25,10 +25,10 @@
        <p><strong>Summary:</strong> {{this.summary}}</p>
        <p><strong>Notes:</strong> 
         {{#if this.note}}
-            {{this.note}}
+            {{this.note.body}}
         {{/if}}</p>
        <form>
-        <textarea type="text" class="textAreaInput" action="/articles" name="noteForm" method="post"></textarea> 
+        <textarea type="text" class="textAreaInput" action="/articles" name="noteForm" placeholder="Enter a note" method="post"></textarea> 
         <button type="submit" data-id="{{this._id}}" class="btn btn-success savenote">Submit Note</button>
         <button type="submit" data-id="{{this._id}}" class="btn btn-info save-btn">Save Article</button>
         <button type="submit" data-id="{{this._id}}" class="btn btn-danger delete-btn">Delete Article</button>

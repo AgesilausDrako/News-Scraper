@@ -1,5 +1,6 @@
 // Require mongoose
 var mongoose = require("mongoose");
+var uniqueValidator = require('mongoose-unique-validator');
 // Create Schema class
 var Schema = mongoose.Schema;
 
@@ -30,6 +31,7 @@ var ArticleSchema = new Schema({
   }
 });
 
+ArticleSchema.plugin(uniqueValidator);
 // Create the Article model with the ArticleSchema
 var Article = mongoose.model("Article", ArticleSchema);
 
