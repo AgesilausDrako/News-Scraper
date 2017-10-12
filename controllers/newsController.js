@@ -1,4 +1,7 @@
 var express = require("express");
+// Our scraping tools
+var request = require("request");
+var cheerio = require("cheerio");
 
 var router = express.Router();
 
@@ -46,7 +49,7 @@ router.get("/", function(req, res) {
       });
     },
   function(req, res) {
-    res.redirect("/articles");
+    res.send("/articles");
   });
     console.log("got articles");
   });
@@ -67,23 +70,23 @@ router.get("/", function(req, res) {
   
   
   // Grab an article by it's ObjectId
-  router.get("/articles/:id", function(req, res) {
-    // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-    Article.findOne({ "_id": req.params.id })
-    // ..and populate all of the notes associated with it
-    .populate("note")
-    // now, execute our query
-    .exec(function(error, doc) {
-      // Log any errors
-      if (error) {
-        console.log(error);
-      }
-      // Otherwise, send the doc to the browser as a json object
-      else {
-        res.json(doc);
-      }
-    });
-  });
+  // router.get("/articles/:id", function(req, res) {
+  //   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+  //   Article.findOne({ "_id": req.params.id })
+  //   // ..and populate all of the notes associated with it
+  //   .populate("note")
+  //   // now, execute our query
+  //   .exec(function(error, doc) {
+  //     // Log any errors
+  //     if (error) {
+  //       console.log(error);
+  //     }
+  //     // Otherwise, send the doc to the browser as a json object
+  //     else {
+  //       res.json(doc);
+  //     }
+  //   });
+  // });
   
   
   // Create a new note or replace an existing note
@@ -129,43 +132,32 @@ router.get("/", function(req, res) {
     });
   });
   
-  router.post("/articles/:id", function(req, res) {
+  router.post("/articles/saved/:id", function(req, res) {
     if (error) {
       console.log(error);
     }
     // Otherwise
     else {
-      // Use the article id to find and update it's note
-      Article.findOneAndUpdate({ "saved": req.params.saved })
-      // Execute the above query
-      .exec(function(err, doc) {
-        // Log any errors
-        if (err) {
-          console.log(err);
-        }
-        else {
-          // Or send the document to the browser
-          res.json(doc);
-        }
-      });
+        // Use the article id to find and update it's saved state
+        Article.findByIdAndUpdate({"_id":req.params.id}, { saved: true }, function(err, article) {
+          if (err) throw err;
+          // we have the updated user returned to us
+          console.log(article);
+        });
     }
   });
   
-  router.post("/articles/:id", function(req, res) {
-      if (error) {
-        console.log(error);
-      }
-      // Otherwise
-      else {
+  router.post("/articles/delete/:id", function(req, res) {
+     
         // Use the article id to find and delete it
-        Article.remove({"_id": req.params.id}, function(err){
+        Article.findByIdAndRemove(req.params.id, function (err, article) {  
           if(err) {
-            throw err; 
+            console.log(err);
           } else {
-            window.location = "articles";
+            res.send(article);
           }
       });
-    }
+    
   });
 
 // Export routes for server.js to use.

@@ -12,18 +12,15 @@
   });
 
   $(document).on("click", ".save-btn", function() {
+    event.preventDefault();
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-id");
   
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
       method: "POST",
-      url: "/articles/" + thisId,
-      saved: {
-        // Value taken from note textarea
-        Boolean: true
-      }
-    })
+      url: "/articles/saved/" + thisId
+      })
       // With that done
       .done(function(data) {
         // Log the response
@@ -39,7 +36,7 @@
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
       method: "POST",
-      url: "/articles/" + thisId,
+      url: "/articles/delete/" + thisId,
     })
       // With that done
       .done(function(data) {
