@@ -11,7 +11,7 @@
     });
   });
 
-  $(document).on("click", ".save-btn", function() {
+  $(document).on("click", ".save-btn", function(event) {
     event.preventDefault();
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-id");
@@ -32,7 +32,8 @@
       });
   });
 
-  $(document).on("click", ".delete-btn", function() {
+  $(document).on("click", ".delete-btn", function(event) {
+    event.preventDefault();
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-id");
   
@@ -50,25 +51,29 @@
   });
   
   // When you click the savenote button
-  $(document).on("click", ".savenote", function() {
-    // Grab the id associated with the article from the submit button
-    var thisId = $(this).attr("data-id");
-  
-    // Run a POST request to change the note, using what's entered in the inputs
-    $.ajax({
-      method: "POST",
-      url: "/articles/" + thisId,
-      data: {
-        // Value taken from note textarea
-        body: $(".textAreaInput").val()
-      }
-    })
-      // With that done
-      .done(function(data) {
-        // Log the response
-        console.log(data);
-        window.location = "/articles";
-      });
-    // Also, remove the values entered in the input and textarea for note entry
-    $("#bodyinput").val("");
+  $(document).on("click", ".savenote", function(event) {
+    event.preventDefault();
+    if($(".textAreaInput").val() === "") {
+      return false;
+    } else {
+      // Grab the id associated with the article from the submit button
+      var thisId = $(this).attr("data-id");
+      // Run a POST request to change the note, using what's entered in the inputs
+      $.ajax({
+        method: "POST",
+        url: "/articles/" + thisId,
+        data: {
+          // Value taken from note textarea
+          body: $(".textAreaInput").val()
+        }
+      })
+        // With that done
+        .done(function(data) {
+          // Log the response
+          console.log(data);
+          window.location = "/articles";
+        });
+      // Also, remove the values entered in the input and textarea for note entry
+      $("#bodyinput").val("");
+    }
   });
