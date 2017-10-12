@@ -132,19 +132,18 @@ router.get("/", function(req, res) {
     });
   });
   
-  router.post("/articles/saved/:id", function(req, res) {
-    if (error) {
-      console.log(error);
-    }
-    // Otherwise
-    else {
+  router.put("/articles/saved/:id", function(req, res) {
         // Use the article id to find and update it's saved state
-        Article.findByIdAndUpdate({"_id":req.params.id}, { saved: true }, function(err, article) {
-          if (err) throw err;
-          // we have the updated user returned to us
-          console.log(article);
-        });
-    }
+        Article.update({ "_id": req.params.id }, {"saved": true}, { multi: true }, function(err, article) {  
+          // Handle any possible database errors
+          if (err) {
+              console.log(err);
+          } else {
+              // Update each attribute with any possible attribute that may have been submitted in the body of the request
+              // If that attribute isn't in the request body, default back to whatever it was before.
+            res.send(article);
+          }
+      });
   });
   
   router.post("/articles/delete/:id", function(req, res) {

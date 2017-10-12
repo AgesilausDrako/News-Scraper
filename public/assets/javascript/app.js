@@ -18,8 +18,11 @@
   
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
-      method: "POST",
-      url: "/articles/saved/" + thisId
+      method: "PUT",
+      url: "/articles/saved/" + thisId,
+      data: {
+          saved: true
+        }
       })
       // With that done
       .done(function(data) {

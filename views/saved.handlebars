@@ -25,9 +25,8 @@
        <p><strong>Notes:</strong> {{this.note}}</p>
        <form>
         <textarea type="text" class="textAreaInput" action="/articles" name="noteForm" method="post"></textarea> 
-        <button type="submit" class="btn btn-success savenote">Submit Note</button>
-        <button type="submit" class="btn btn-info save-btn">Save Article</button>
-        <button type="submit" class="btn btn-danger delete-btn">Delete Article</button>
+        <button type="submit" data-id="{{this._id}}" class="btn btn-success savenote">Submit Note</button>
+        <button type="submit" data-id="{{this._id}}" class="btn btn-danger delete-btn">Delete Article</button>
   	   </form>
     </li>
     {{/if}}
