@@ -1,8 +1,9 @@
+// Express server
 var express = require("express");
-// Our scraping tools
+// Scraping tools
 var request = require("request");
 var cheerio = require("cheerio");
-
+// Router for get/post/put/delete routes
 var router = express.Router();
 
 // Requiring our Note and Article models
@@ -11,7 +12,6 @@ var Article = require("../models/Article.js");
 
 // Routes
 // ======
-
 // HOME ROUTE
 router.get("/", function(req, res) {
     res.render("index", {});
@@ -122,20 +122,6 @@ router.post("/articles/:id", function(req, res) {
   });
 });
 
-router.get("/saved", function(req, res) {
-  // Grab every doc in the Articles array
-  Article.find({}).populate("note").exec(function(error, articles) {
-    // Log any errors
-    if (error) {
-      console.log(error);
-    }
-    // Or send the doc to the browser as a json object
-    else {
-      res.render("saved", {articles});
-    }
-  });
-});
-
 router.put("/articles/put/:id", function(req, res) {
     // Use the article id to find and update it's saved state
     Article.update({ "_id": req.params.id }, {"saved": true}, { multi: true }, function(err, article) {  
@@ -150,19 +136,7 @@ router.put("/articles/put/:id", function(req, res) {
   });
 });
 
-router.put("/saved/put/:id", function(req, res) {
-    // Use the article id to find and update it's saved state
-    Article.update({ "_id": req.params.id }, {"saved": false}, { multi: true }, function(err, article) {  
-      // Handle any possible database errors
-      if (err) {
-          console.log(err);
-      } else {
-          // Update each attribute with any possible attribute that may have been submitted in the body of the request
-          // If that attribute isn't in the request body, default back to whatever it was before.
-        res.send(article);
-      }
-  });
-});
+
   
 router.post("/articles/delete/:id", function(req, res) {
       // Use the article id to find and delete it
@@ -173,6 +147,21 @@ router.post("/articles/delete/:id", function(req, res) {
           res.send(article);
         }
     });
+});
+
+// SAVED ROUTES
+router.get("/saved", function(req, res) {
+  // Grab every doc in the Articles array
+  Article.find({}).populate("note").exec(function(error, articles) {
+    // Log any errors
+    if (error) {
+      console.log(error);
+    }
+    // Or send the doc to the browser as a json object
+    else {
+      res.render("saved", {articles});
+    }
+  });
 });
 
 router.post("/articles/saved/delete/:id", function(req, res) {
@@ -212,6 +201,20 @@ router.post("/saved/:id", function(req, res) {
         }
       });
     }
+  });
+});
+
+router.put("/saved/put/:id", function(req, res) {
+    // Use the article id to find and update it's saved state
+    Article.update({ "_id": req.params.id }, {"saved": false}, { multi: true }, function(err, article) {  
+      // Handle any possible database errors
+      if (err) {
+          console.log(err);
+      } else {
+          // Update each attribute with any possible attribute that may have been submitted in the body of the request
+          // If that attribute isn't in the request body, default back to whatever it was before.
+        res.send(article);
+      }
   });
 });
 

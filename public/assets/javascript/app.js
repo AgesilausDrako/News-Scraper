@@ -1,4 +1,4 @@
-
+  // Click function that scrapes new articles
   $(document).on("click", "#scrape-btn", function(event) {
     event.preventDefault();
     console.log("clicked");
@@ -11,6 +11,7 @@
     });
   });
 
+  // Click function that saves the selected article
   $(document).on("click", ".save-btn", function(event) {
     event.preventDefault();
     // Grab the id associated with the article from the submit button
@@ -32,11 +33,11 @@
       });
   });
 
+  // Click function that unsaves the selected article
   $(document).on("click", ".unsave-btn", function(event) {
     event.preventDefault();
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-id");
-  
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
       method: "PUT",
@@ -53,11 +54,11 @@
       });
   });
 
+  // Click function that deletes the article from the article page
   $(document).on("click", ".delete-btn", function(event) {
     event.preventDefault();
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-id");
-  
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
       method: "POST",
@@ -71,6 +72,7 @@
       });
   });
 
+  // Click function that deletes the article from the saved page
   $(document).on("click", ".delete-btn-saved", function(event) {
     event.preventDefault();
     // Grab the id associated with the article from the submit button
@@ -89,7 +91,7 @@
       });
   });
   
-  // When you click the savenote button
+  // Click function that saves the note on the article page
   $(document).on("click", ".savenote", function(event) {
     event.preventDefault();
     if($(".textAreaInput").val() === "") {
