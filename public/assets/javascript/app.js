@@ -2,7 +2,7 @@
   $(document).on("click", "#scrape-btn", function(event) {
     event.preventDefault();
     console.log("clicked");
-    $.get({
+    $.ajax({
       method: "GET",
       url: "/scrape"
     })
@@ -19,7 +19,7 @@
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
       method: "PUT",
-      url: "/articles/saved/" + thisId,
+      url: "/articles/put/" + thisId,
       data: {
           saved: true
         }
@@ -29,6 +29,27 @@
         // Log the response
         console.log(data);
         window.location = "/articles";
+      });
+  });
+
+  $(document).on("click", ".unsave-btn", function(event) {
+    event.preventDefault();
+    // Grab the id associated with the article from the submit button
+    var thisId = $(this).attr("data-id");
+  
+    // Run a POST request to change the note, using what's entered in the inputs
+    $.ajax({
+      method: "PUT",
+      url: "/saved/put/" + thisId,
+      data: {
+          saved: true
+        }
+      })
+      // With that done
+      .done(function(data) {
+        // Log the response
+        console.log(data);
+        window.location = "/saved";
       });
   });
 
@@ -47,6 +68,24 @@
         // Log the response
         console.log(data);
         window.location = "/articles";
+      });
+  });
+
+  $(document).on("click", ".delete-btn-saved", function(event) {
+    event.preventDefault();
+    // Grab the id associated with the article from the submit button
+    var thisId = $(this).attr("data-id");
+  
+    // Run a POST request to change the note, using what's entered in the inputs
+    $.ajax({
+      method: "POST",
+      url: "/articles/saved/delete/" + thisId,
+    })
+      // With that done
+      .done(function(data) {
+        // Log the response
+        console.log(data);
+        window.location = "/saved";
       });
   });
   

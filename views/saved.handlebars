@@ -10,25 +10,29 @@
     </ul>
   </div>
 </nav>
- <div class="jumbotron txt-center"><h1 class="text-center">Russian News-Scraper</h1>
- </div>
- <div>
-     <h1 class="text-center">Scraped Articles</h1>
- </div>
-    <ul id="articles">
-  {{#each articles}}
-    {{#if this.saved}}
-  	<li class="listing">
-  	   <p class="title"><strong>Title:</strong> {{this.title}}</p>
-       <p><strong>Link:</strong> <a href="http://www.bbc.com/{{this.link}}" target="_blank">{{this.link}}</a></p>
-       <p><strong>Summary:</strong> {{this.summary}}</p>
-       <p><strong>Notes:</strong> {{this.note}}</p>
-       <form>
-        <textarea type="text" class="textAreaInput" action="/articles" name="noteForm" method="post"></textarea> 
-        <button type="submit" data-id="{{this._id}}" class="btn btn-success savenote">Submit Note</button>
-        <button type="submit" data-id="{{this._id}}" class="btn btn-danger delete-btn">Delete Article</button>
-  	   </form>
-    </li>
-    {{/if}}
-  {{/each}}
+<div class="jumbotron txt-center"><h1 class="text-center">Russian News-Scraper</h1>
+</div>
+<div>
+    <h1 class="text-center">Saved Articles</h1>
+</div>
+<ul id="articles">
+{{#each articles}}
+  {{#if this.saved}}
+  <li class="listing">
+    <p class="title"><strong>Title:</strong> {{this.title}}</p>
+    <p><strong>Link:</strong> <a href="http://www.bbc.com/{{this.link}}" target="_blank">{{this.link}}</a></p>
+    <p><strong>Summary:</strong> {{this.summary}}</p>
+    <p><strong>Notes:</strong> 
+      {{#if this.note}}
+          {{this.note.body}}
+      {{/if}}</p>
+    <form>
+      <textarea type="text" class="textAreaInput" action="/saved" name="noteForm" placeholder="Enter a note" method="post"></textarea> 
+      <button type="submit" data-id="{{this._id}}" class="btn btn-success savenote-saved">Submit Note</button>
+      <button type="submit" data-id="{{this._id}}" class="btn btn-info unsave-btn">Unsave Article</button>
+      <button type="submit" data-id="{{this._id}}" class="btn btn-danger delete-btn-saved">Delete Article</button>
+    </form>
+  </li>
+  {{/if}}
+{{/each}}
 </ul>
