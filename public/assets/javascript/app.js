@@ -118,3 +118,43 @@
       $("#bodyinput").val("");
     }
   });
+
+  // UNFINISHED
+  // Click function that deletes the note from the articles page
+  $(document).on("click", ".delete-articles-note-btn", function(event) {
+    event.preventDefault();
+    // Grab the id associated with the note from the submit button
+    var thisId = $(this).attr("data-id");
+  
+    // Run a POST request to delete the note
+    $.ajax({
+      method: "POST",
+      url: "/articles/note/delete/" + thisId
+    })
+      // With that done
+      .done(function(data) {
+        // Log the response
+        console.log(data);
+        window.location = "/articles";
+      });
+  });
+
+  // UNFINISHED
+  // Click function that deletes the note from the saved page
+  $(document).on("click", ".delete-saved-note-btn", function(event) {
+    event.preventDefault();
+    // Grab the id associated with the note from the submit button
+    var thisId = $(this).attr("data-id");
+  
+    // Run a POST request to delete the note
+    $.ajax({
+      method: "POST",
+      url: "/saved/note/delete/" + thisId
+    })
+      // With that done
+      .done(function(data) {
+        // Log the response
+        console.log(data);
+        window.location = "/saved";
+      });
+  });

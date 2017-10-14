@@ -24,7 +24,7 @@
     <p><strong>Summary:</strong> {{this.summary}}</p>
     <p><strong>Notes:</strong> 
       {{#if this.note}}
-          {{this.note.body}}
+          <button class="delete-saved-note-btn" data-id="{{this.note._id}}">X</button>{{this.note.body}}
       {{/if}}</p>
     <form>
       <textarea type="text" class="textAreaInput" action="/saved" name="noteForm" placeholder="Enter a note" method="post"></textarea> 

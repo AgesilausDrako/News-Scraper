@@ -135,8 +135,6 @@ router.put("/articles/put/:id", function(req, res) {
   });
 });
 
-
-  
 router.post("/articles/delete/:id", function(req, res) {
       // Use the article id to find and delete it
       Article.findByIdAndRemove(req.params.id, function (err, article) {  
@@ -146,6 +144,19 @@ router.post("/articles/delete/:id", function(req, res) {
           res.send(article);
         }
     });
+});
+
+//UNFINISHED
+router.post("/articles/note/delete/:id", function(req, res) {
+    // Use the note id to find and delete it
+    Article.findByIdAndRemove(req.params.id, function (err, note) {  
+      if(err) {
+        console.log(err);
+      } else {
+        console.log("clicked");
+        res.send(note);
+      }
+  });
 });
 
 // SAVED ROUTES
@@ -213,6 +224,20 @@ router.put("/saved/put/:id", function(req, res) {
           // Update each attribute with any possible attribute that may have been submitted in the body of the request
           // If that attribute isn't in the request body, default back to whatever it was before.
         res.send(article);
+      }
+  });
+});
+
+
+//UNFINISHED
+router.post("/articles/note/delete/:id", function(req, res) {
+    // Use the note id to find and delete it
+    Article.findByIdAndRemove(req.params.id, function (err, note) {  
+      if(err) {
+        console.log(err);
+      } else {
+        console.log("clicked");
+        res.send(note);
       }
   });
 });

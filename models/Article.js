@@ -15,10 +15,12 @@ var ArticleSchema = new Schema({
   // link is a required string
   link: {
     type: String,
+    unique: true,
     required: true
   },
   summary: {
     type: String,
+    unique: true,
     required: true
   },
   saved: {

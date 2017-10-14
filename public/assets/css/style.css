@@ -70,6 +70,11 @@ p {
   margin-left: 1em;
 }
 
+.delete-articles-note-btn, .delete-saved-note-btn {
+  background-color: rgb(235, 17, 17);
+  margin: 0 .5em 0 .25em;
+}
+
 .btn-danger {
   padding: 1em;
   font-size: .75em;
