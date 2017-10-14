@@ -1,12 +1,11 @@
-/* Showing Mongoose's "Populated" Method
- * =============================================== */
+/* =============================================== */
 
 // Dependencies
 var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
-
+var port = process.env.PORT || 3000;
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
@@ -15,7 +14,7 @@ mongoose.Promise = Promise;
 // Initialize Express
 var app = express();
 
-// Use morgan body parser with our app
+// Use morgan body parser with the app
 app.use(logger("dev"));
 app.use(bodyParser.urlencoded({
   extended: false
@@ -46,10 +45,9 @@ app.set("view engine", "handlebars");
 
 // Import routes and give the server access to them.
 var routes = require("./controllers/newsController.js");
-
 app.use("/", routes);
 
 // Listen on port 3000
-app.listen(3000, function() {
+app.listen(port, function() {
   console.log("App running on port 3000!");
 });

@@ -5,7 +5,6 @@ var request = require("request");
 var cheerio = require("cheerio");
 // Router for get/post/put/delete routes
 var router = express.Router();
-
 // Requiring our Note and Article models
 var Note = require("../models/Note.js");
 var Article = require("../models/Article.js");
@@ -41,20 +40,20 @@ router.get("/scrape", function(req, res) {
 
       // Now, save that entry to the db
       entry.save(function(err, doc) {
-        // Log any errors
-        if (err) {
-          console.log(err);
-        }
-        // Or log the doc
-        else {
-          console.log(doc);
-        }
+          // Log any errors
+          if (err) {
+            console.log(err);
+          }
+          // Or log the doc
+          else {
+            console.log(doc);
+          }
+        });
       });
+    },
+    function(req, res) {
+      res.redirect('/articles');
     });
-  },
-  function(req, res) {
-    res.redirect("/articles");
-  });
     console.log("got articles");
   });
   
