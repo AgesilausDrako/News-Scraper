@@ -23,8 +23,10 @@ router.get("/scrape", function(req, res) {
   request("http://www.bbc.com/russian/news", function(error, response, html) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(html);
+    var counter = 1;
+    var articleBody = $("div.eagle-item__body");
     // Now, we grab every h2 within an article tag, and do the following:
-    $("div.eagle-item__body").each(function(i, element) {
+    articleBody.each(function(i, element) {
 
       // Save an empty result object
       var result = {};
@@ -49,12 +51,14 @@ router.get("/scrape", function(req, res) {
             console.log(doc);
           }
         });
+        if (counter++ === articleBody.length) {
+          res.redirect("/articles");
+        }
       });
     },
     function(req, res) {
       res.redirect('/articles');
     });
-    console.log("got articles");
   });
   
   router.get("/articles", function(req, res) {
@@ -70,27 +74,6 @@ router.get("/scrape", function(req, res) {
       }
     });
   });
-  
-  
-  // Grab an article by it's ObjectId
-  // router.get("/articles/:id", function(req, res) {
-  //   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-  //   Article.findOne({ "_id": req.params.id })
-  //   // ..and populate all of the notes associated with it
-  //   .populate("note")
-  //   // now, execute our query
-  //   .exec(function(error, doc) {
-  //     // Log any errors
-  //     if (error) {
-  //       console.log(error);
-  //     }
-  //     // Otherwise, send the doc to the browser as a json object
-  //     else {
-  //       res.json(doc);
-  //     }
-  //   });
-  // });
-  
   
 // Create a new note or replace an existing note
 router.post("/articles/:id", function(req, res) {
@@ -146,7 +129,7 @@ router.post("/articles/delete/:id", function(req, res) {
     });
 });
 
-//UNFINISHED
+// UNFINISHED
 router.post("/articles/note/delete/:id", function(req, res) {
     // Use the note id to find and delete it
     Article.findByIdAndRemove(req.params.id, function (err, note) {  
@@ -227,7 +210,6 @@ router.put("/saved/put/:id", function(req, res) {
       }
   });
 });
-
 
 //UNFINISHED
 router.post("/articles/note/delete/:id", function(req, res) {
