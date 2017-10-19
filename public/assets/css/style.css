@@ -67,7 +67,15 @@ ul {
 }
 
 p {
+  margin-left: .75em;
+}
+
+.notes-display {
+  border: .07em solid rgb(14, 3, 3);
+  border-radius: .75em;
+  width: 60%;
   margin-left: 1em;
+  margin-bottom: .25em;
 }
 
 .delete-articles-note-btn, .delete-saved-note-btn {

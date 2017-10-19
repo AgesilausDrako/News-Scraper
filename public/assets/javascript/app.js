@@ -119,7 +119,34 @@
     }
   });
 
-  // UNFINISHED
+  // Click function that saves the note on the saved page
+  $(document).on("click", ".savenote-saved", function(event) {
+    event.preventDefault();
+    if($(".textAreaInput").val() === "") {
+      return false;
+    } else {
+      // Grab the id associated with the article from the submit button
+      var thisId = $(this).attr("data-id");
+      // Run a POST request to change the note, using what's entered in the inputs
+      $.ajax({
+        method: "POST",
+        url: "/saved/" + thisId,
+        data: {
+          // Value taken from note textarea
+          body: $(".textAreaInput").val()
+        }
+      })
+        // With that done
+        .done(function(data) {
+          // Log the response
+          // console.log(data);
+          window.location = "/saved";
+        });
+      // Also, remove the values entered in the input and textarea for note entry
+      $("#bodyinput").val("");
+    }
+  });
+
   // Click function that deletes the note from the articles page
   $(document).on("click", ".delete-articles-note-btn", function(event) {
     event.preventDefault();
@@ -139,7 +166,6 @@
       });
   });
 
-  // UNFINISHED
   // Click function that deletes the note from the saved page
   $(document).on("click", ".delete-saved-note-btn", function(event) {
     event.preventDefault();

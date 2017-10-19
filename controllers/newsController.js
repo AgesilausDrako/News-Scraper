@@ -180,16 +180,17 @@ router.post("/saved/:id", function(req, res) {
     // Otherwise
     else {
       // Use the article id to find and update it's note
-      Article.findOneAndUpdate({ "_id": req.params.id }, { "note": doc.id })
+      Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"notes":doc._id}}, { new: true })
       // Execute the above query
-      .exec(function(err, doc) {
+      .exec(function(err, newdoc) {
         // Log any errors
         if (err) {
           console.log(err);
         }
         else {
           // Or send the document to the browser
-          res.json(doc);
+          console.log(newdoc)
+          res.json(newdoc);
         }
       });
     }
@@ -210,7 +211,6 @@ router.put("/saved/put/:id", function(req, res) {
   });
 });
 
-//UNFINISHED
 router.post("/saved/note/delete/:id", function(req, res) {
     // Use the note id to find and delete it
     Note.findByIdAndRemove(req.params.id, function (err, note) {  

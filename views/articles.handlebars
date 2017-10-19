@@ -23,12 +23,17 @@
   	   <p class="title"><strong>Title:</strong> {{this.title}}</p>
        <p><strong>Link:</strong> <a href="http://www.bbc.com/{{this.link}}" target="_blank">{{this.link}}</a></p>
        <p><strong>Summary:</strong> {{this.summary}}</p>
-       <p><strong>Notes:</strong> 
-        {{#if this.notes}}
-            {{#each this.notes}}
-            <button class="delete-articles-note-btn" data-id="{{this.id}}">x</button>{{this.body}}
-            {{/each}}
-        {{/if}}</p>
+       <div class="notes-display">
+          <p><strong>Notes:</strong> 
+            {{#if this.notes}}
+                <div class="notes-div"></div>
+                  {{#each this.notes}}
+                  <p><button class="delete-articles-note-btn" data-id="{{this.id}}">x</button>{{this.body}}</p>
+                  {{/each}}
+                </div>
+            {{/if}}
+          </p>
+        </div>
        <form>
         <textarea type="text" class="textAreaInput" action="/articles" name="noteForm" placeholder="Enter a note" method="post"></textarea> 
         <button type="submit" data-id="{{this._id}}" class="btn btn-success savenote">Submit Note</button>
