@@ -111,7 +111,7 @@
         // With that done
         .done(function(data) {
           // Log the response
-          console.log(data);
+          // console.log(data);
           window.location = "/articles";
         });
       // Also, remove the values entered in the input and textarea for note entry

@@ -28,48 +28,47 @@ router.get("/scrape", function(req, res) {
     // Now, we grab every h2 within an article tag, and do the following:
     articleBody.each(function(i, element) {
 
-      // Save an empty result object
-      var result = {};
+        // Save an empty result object
+        var result = {};
 
-      // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(this).children("a").text();
-      result.link = $(this).children("a").attr("href");
-      result.summary = $(this).children("p.eagle-item__summary").text();
+        // Add the text and href of every link, and save them as properties of the result object
+        result.title = $(this).children("a").text();
+        result.link = $(this).children("a").attr("href");
+        result.summary = $(this).children("p.eagle-item__summary").text();
 
-      // Using our Article model, create a new entry
-      // This effectively passes the result object to the entry (and the title and link)
-      var entry = new Article(result);
+        // Using our Article model, create a new entry
+        // This effectively passes the result object to the entry (and the title and link)
+        var entry = new Article(result);
 
-      // Now, save that entry to the db
-      entry.save(function(err, doc) {
-          // Log any errors
-          if (err) {
-            console.log(err);
-          }
-          // Or log the doc
-          else {
-            console.log(doc);
+        // Now, save that entry to the db
+        entry.save(function(err, doc) {
+            // Log any errors
+            if (err) {
+              console.log(err);
+            }
+            // Or log the doc
+            else {
+              console.log(doc);
+            }
+          });
+          if (counter++ === articleBody.length) {
+            res.redirect("/articles");
           }
         });
-        if (counter++ === articleBody.length) {
-          res.redirect("/articles");
-        }
-      });
-    },
-    function(req, res) {
-      res.redirect('/articles');
-    });
+      }
+    );
   });
   
   router.get("/articles", function(req, res) {
     // Grab every doc in the Articles array
-    Article.find({}).populate("note").exec(function(error, articles) {
+    Article.find({}).populate("notes").exec(function(error, articles) {
       // Log any errors
       if (error) {
         console.log(error);
       }
       // Or send the doc to the browser as a json object
       else {
+        // console.log(articles);
         res.render("articles", {articles});
       }
     });
@@ -88,16 +87,17 @@ router.post("/articles/:id", function(req, res) {
     // Otherwise
     else {
       // Use the article id to find and update it's note
-      Article.findOneAndUpdate({ "_id": req.params.id }, { "note": doc.id })
+      Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"notes":doc._id}}, { new: true })
       // Execute the above query
-      .exec(function(err, doc) {
+      .exec(function(err, newdoc) {
         // Log any errors
         if (err) {
           console.log(err);
         }
         else {
           // Or send the document to the browser
-          res.json(doc);
+          console.log(newdoc)
+          res.json(newdoc);
         }
       });
     }
@@ -106,7 +106,7 @@ router.post("/articles/:id", function(req, res) {
 
 router.put("/articles/put/:id", function(req, res) {
     // Use the article id to find and update it's saved state
-    Article.update({ "_id": req.params.id }, {"saved": true}, { multi: true }, function(err, article) {  
+    Article.update({ "_id": req.params.id }, { "saved": true }, { multi: true }, function(err, article) {  
       // Handle any possible database errors
       if (err) {
           console.log(err);
