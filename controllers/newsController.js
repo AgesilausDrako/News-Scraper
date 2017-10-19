@@ -129,10 +129,9 @@ router.post("/articles/delete/:id", function(req, res) {
     });
 });
 
-// UNFINISHED
 router.post("/articles/note/delete/:id", function(req, res) {
     // Use the note id to find and delete it
-    Article.findByIdAndRemove(req.params.id, function (err, note) {  
+    Note.findByIdAndRemove(req.params.id, function (err, note) {  
       if(err) {
         console.log(err);
       } else {
@@ -145,7 +144,7 @@ router.post("/articles/note/delete/:id", function(req, res) {
 // SAVED ROUTES
 router.get("/saved", function(req, res) {
   // Grab every doc in the Articles array
-  Article.find({}).populate("note").exec(function(error, articles) {
+  Article.find({}).populate("notes").exec(function(error, articles) {
     // Log any errors
     if (error) {
       console.log(error);
@@ -212,9 +211,9 @@ router.put("/saved/put/:id", function(req, res) {
 });
 
 //UNFINISHED
-router.post("/articles/note/delete/:id", function(req, res) {
+router.post("/saved/note/delete/:id", function(req, res) {
     // Use the note id to find and delete it
-    Article.findByIdAndRemove(req.params.id, function (err, note) {  
+    Note.findByIdAndRemove(req.params.id, function (err, note) {  
       if(err) {
         console.log(err);
       } else {

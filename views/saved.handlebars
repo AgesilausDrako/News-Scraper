@@ -24,10 +24,10 @@
     <p><strong>Summary:</strong> {{this.summary}}</p>
     <p><strong>Notes:</strong> 
       {{#if this.notes}}
-          {{#each this.notes}}
-          <button class="delete-saved-note-btn" data-id="{{this.id}}">X</button>{{this.body}}
-          {{/each}}
-      {{/if}}</p>
+            {{#each this.notes}}
+            <button class="delete-saved-note-btn" data-id="{{this.id}}">x</button>{{this.body}}
+            {{/each}}
+        {{/if}}</p>
     <form>
       <textarea type="text" class="textAreaInput" action="/saved" name="noteForm" placeholder="Enter a note" method="post"></textarea> 
       <button type="submit" data-id="{{this._id}}" class="btn btn-success savenote-saved">Submit Note</button>
