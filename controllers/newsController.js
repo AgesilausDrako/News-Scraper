@@ -87,7 +87,7 @@ router.post("/articles/:id", function(req, res) {
     // Otherwise
     else {
       // Use the article id to find and update it's note
-      Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"notes":doc._id}}, { new: true })
+      Article.findOneAndUpdate({ "_id": req.params.id }, { $push: {"notes":doc.id} }, { new: true })
       // Execute the above query
       .exec(function(err, newdoc) {
         // Log any errors
@@ -180,7 +180,7 @@ router.post("/saved/:id", function(req, res) {
     // Otherwise
     else {
       // Use the article id to find and update it's note
-      Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"notes":doc._id}}, { new: true })
+      Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"notes":doc}}, { new: true })
       // Execute the above query
       .exec(function(err, newdoc) {
         // Log any errors
@@ -199,7 +199,7 @@ router.post("/saved/:id", function(req, res) {
 
 router.put("/saved/put/:id", function(req, res) {
     // Use the article id to find and update it's saved state
-    Article.update({ "_id": req.params.id }, {"saved": false}, { multi: true }, function(err, article) {  
+    Article.update({ "_id": req.params.id }, { "saved": false }, { multi: true }, function(err, article) {  
       // Handle any possible database errors
       if (err) {
           console.log(err);

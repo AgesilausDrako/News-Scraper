@@ -93,17 +93,19 @@
   
   // Click function that saves the note on the article page
   $(document).on("click", ".savenote", function(event) {
-    event.preventDefault();
+      event.preventDefault();
     
       // Grab the id associated with the article from the submit button
       var thisId = $(this).attr("data-id");
+      var articlesInput = $(this).closest("form").children("textarea").val();
+
       // Run a POST request to change the note, using what's entered in the inputs
       $.ajax({
         method: "POST",
-        url: "/articles/" + thisId,
+        url: "/saved/" + thisId,
         data: {
           // Value taken from note textarea
-          body: $(".textAreaInput").val()
+          body: articlesInput
         }
       })
         // With that done
@@ -113,23 +115,25 @@
           window.location = "/articles";
         });
       // Also, remove the values entered in the input and textarea for note entry
-      $("#bodyinput").val("");
+      // $("#bodyinput").val("");
     
   });
 
   // Click function that saves the note on the saved page
   $(document).on("click", ".savenote-saved", function(event) {
     event.preventDefault();
-    
+      
       // Grab the id associated with the article from the submit button
       var thisId = $(this).attr("data-id");
+      var savedInput = $(this).closest("form").children("textarea").val();
+
       // Run a POST request to change the note, using what's entered in the inputs
       $.ajax({
         method: "POST",
         url: "/saved/" + thisId,
         data: {
           // Value taken from note textarea
-          body: $(".textAreaInput").val()
+          body: savedInput
         }
       })
         // With that done
@@ -139,8 +143,8 @@
           window.location = "/saved";
         });
       // Also, remove the values entered in the input and textarea for note entry
-      $("#bodyinput").val("");
-    
+      // $("#bodyinput").val("");
+      
   });
 
   // Click function that deletes the note from the articles page
