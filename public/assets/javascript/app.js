@@ -99,6 +99,9 @@
       var thisId = $(this).attr("data-id");
       var articlesInput = $(this).closest("form").children("textarea").val();
 
+      if (articlesInput === "") {
+        return false
+      } else {
       // Run a POST request to change the note, using what's entered in the inputs
       $.ajax({
         method: "POST",
@@ -116,7 +119,7 @@
         });
       // Also, remove the values entered in the input and textarea for note entry
       // $("#bodyinput").val("");
-    
+      }
   });
 
   // Click function that saves the note on the saved page
@@ -127,6 +130,9 @@
       var thisId = $(this).attr("data-id");
       var savedInput = $(this).closest("form").children("textarea").val();
 
+      if (savedInput === "") {
+        return false
+      } else {
       // Run a POST request to change the note, using what's entered in the inputs
       $.ajax({
         method: "POST",
@@ -144,7 +150,7 @@
         });
       // Also, remove the values entered in the input and textarea for note entry
       // $("#bodyinput").val("");
-      
+      }
   });
 
   // Click function that deletes the note from the articles page
