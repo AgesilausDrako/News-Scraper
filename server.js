@@ -24,7 +24,13 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/newshomeworkmongoose");
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/newshomeworkmongoose",
+  {
+    useMongoClient: true
+  }
+);
+
 var db = mongoose.connection;
 
 // Show any mongoose errors
